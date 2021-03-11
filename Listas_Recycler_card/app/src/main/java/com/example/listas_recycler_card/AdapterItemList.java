@@ -13,10 +13,12 @@ import androidx.recyclerview.widget.RecyclerView;
 import java.util.ArrayList;
 import java.util.List;
 
-public class AdapterItemList extends RecyclerView.Adapter<AdapterItemList.ViewHolderItemList>{
+public class AdapterItemList extends RecyclerView.Adapter<AdapterItemList.ViewHolderItemList> implements View.OnClickListener{
 
     ///lista de los objetos
     ArrayList<ItemList> listaObjetos;
+    ///escuchador del evento
+    private View.OnClickListener listener;
 
     public AdapterItemList(List<ItemList> lista){
         this.listaObjetos = (ArrayList<ItemList>) lista;
@@ -27,6 +29,8 @@ public class AdapterItemList extends RecyclerView.Adapter<AdapterItemList.ViewHo
     public ViewHolderItemList onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         ///vincula la vista del objeto para el recylcer
         View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.item_list, null, false);
+
+        view.setOnClickListener(this);
 
         return new ViewHolderItemList(view);
     }
@@ -41,6 +45,18 @@ public class AdapterItemList extends RecyclerView.Adapter<AdapterItemList.ViewHo
     @Override
     public int getItemCount() {
         return listaObjetos.size();
+    }
+
+    public void setOnClickListener(View.OnClickListener listener){
+        this.listener = listener;
+    }
+
+    ///evento sobre el recyclerView
+    @Override
+    public void onClick(View v) {
+        if(this.listener != null){
+            listener.onClick(v);
+        }
     }
 
     public class ViewHolderItemList extends RecyclerView.ViewHolder{

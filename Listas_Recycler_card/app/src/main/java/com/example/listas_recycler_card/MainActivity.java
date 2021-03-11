@@ -14,6 +14,7 @@ import android.view.View;
 
 import android.view.Menu;
 import android.view.MenuItem;
+import android.widget.Toast;
 
 import java.util.ArrayList;
 
@@ -46,6 +47,12 @@ public class MainActivity extends AppCompatActivity {
 
         llenarElementos();
         AdapterItemList adapter = new AdapterItemList(listaElementos);
+        adapter.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Toast.makeText(MainActivity.this, "Selección: "+listaElementos.get(recycler.getChildAdapterPosition(v)).getTitulo(), Toast.LENGTH_LONG).show();
+            }
+        });
         recycler.setAdapter(adapter);
     }
 
